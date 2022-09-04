@@ -1,0 +1,160 @@
+body {
+    width: 1200px;
+}
+.header-section {
+    display: flex;
+    width: 100%;
+    align-items: right;
+}
+.vert-header-section {
+    justify-self: flex-end;
+    flex-grow: 1;
+}
+.navigation {
+    flex-grow: 1;
+    justify-self: flex-end;
+    justify-content: right;
+    display: flex;
+    margin-right: 100px;
+}
+
+.product {
+    font-size: x-large;
+    margin-left: 40px;
+  }
+
+.product:hover {
+    background-color: #e2ed0a;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+.cart {
+    font-size: x-large;
+    margin-left: 40px;
+  }
+
+.cart:hover {
+    background-color: #e2ed0a;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+.horizontal-line {
+    background-color:#000000; 
+    height:2px; 
+    width:100%;
+}
+
+.tagline {
+    padding-top: 40px;
+    font-size:xx-large;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+.row {
+    display: flex;
+    margin: 10%;
+    justify-content: space-between;
+}
+
+.image {
+    width: 250px;
+    border: 5px solid rgb(0, 0, 0);
+}
+
+.roll-title {
+    font-size: 20px;
+    font-weight: bold;
+    word-wrap: normal;
+    width: 250px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+.glazing-section {
+    display: flex;
+    
+}
+
+.glazing {
+    font-size:large;
+    padding-right: 10px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+.dropdown {
+    flex-grow: 1;
+    padding-top: 0px;
+    height: fit-content;
+    font-size:large;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+    justify-self: center;
+    border: 3px solid rgb(0, 0, 0);
+    display: flex;
+}
+
+.triangle-down {
+	width: 0;
+	height: 0;
+    margin-left: auto;
+    margin-right: 0px;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid rgb(0, 0, 0);
+    align-self: center;
+}
+
+.pack-size-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pack-size {
+    font-size:large;
+    padding-right: 10px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+.sizes-1 {
+    justify-self: center;
+    width: 25px;
+    font-size:large;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+    background-color: lightgrey;
+    border: 3px solid rgb(0, 0, 0);
+}
+.sizes {
+    justify-self: center;
+    width: 25px;
+    font-size:large;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+    border: 3px solid rgb(0, 0, 0);
+}
+
+.price-cart-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.price {
+    font-size:large;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+.addtocart {
+    padding: 10px;
+    font-size:large;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+    border: 3px solid rgb(0, 0, 0);
+}
+
+.addtocart:hover {
+    background-color: #e2ed0a;
+    border-radius: 5px;
+    cursor: pointer;
+  }
