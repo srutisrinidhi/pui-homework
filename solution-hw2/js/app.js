@@ -1,3 +1,4 @@
+var totalPrice = 0
 class Roll
 {
     constructor(type, price, glazing, packSize, id) {
@@ -64,8 +65,11 @@ class Roll
 
     addToCartList() {
         cartItems.push(this)
-        var popup = document.getElementById("myPopup");
-        popup.classList.toggle("show");
+        totalPrice += this.price
+        document.querySelector(".cart-items").innerHTML = cartItems.length + " item <br> Total: $ " + totalPrice.toFixed(2)
+        modal.style.display = "block";
+        document.querySelector(".modal-content").innerHTML = "<p>Added to cart: <br> <br>" + this.type + "<br>" + this.glazing + "<br> Pack of " + this.packSize + "<br> Prize: $" + this.price + "</p>"
+        const myTimeout = setTimeout(removeBlock, 3000);
     }
 }
 
@@ -75,6 +79,11 @@ const packSizeOptions = {1:1, 3:3, 6:5, 12:10}
 
 const cartItems = []
 
+
+var modal = document.getElementById("myModal");
+function removeBlock() {
+    modal.style.display = "none"
+}
 const originalRoll = new Roll("Original cinnamon roll", 2.49, "Keep original", 1, "originalRoll")
 const appleCinnamonRoll = new Roll("Apple cinnamon roll", 3.49, "Keep original", 1, "appleCinnamonRoll")
 const raisinCinnamonRoll = new Roll("Raisin cinnamon roll", 2.99, "Keep original", 1, "raisinCinnamonRoll")
