@@ -54,13 +54,12 @@ class Roll
     }
     calculatePrice(){
         this.price = (this.basePrice + glazingOptions[this.glazing])*packSizeOptions[this.packSize]
-        this.price = this.price.toFixed(2)
         this.updateRoll()
     }
 
     updateRoll(){
         this.element.querySelector(".roll-title").innerHTML = this.type
-        this.element.querySelector(".price").innerHTML = "$" + this.price
+        this.element.querySelector(".price").innerHTML = "$" + this.price.toFixed(2)
     }
 
     addToCartList() {
@@ -68,7 +67,7 @@ class Roll
         totalPrice += this.price
         document.querySelector(".cart-items").innerHTML = cartItems.length + " item <br> Total: $ " + totalPrice.toFixed(2)
         modal.style.display = "block";
-        document.querySelector(".modal-content").innerHTML = "<p>Added to cart: <br> <br>" + this.type + "<br>" + this.glazing + "<br> Pack of " + this.packSize + "<br> Prize: $" + this.price + "</p>"
+        document.querySelector(".modal-content").innerHTML = "<p>Added to cart: <br> <br>" + this.type + "<br>" + this.glazing + "<br> Pack of " + this.packSize + "<br> Prize: $" + this.price.toFixed(2) + "</p>"
         const myTimeout = setTimeout(removeBlock, 3000);
     }
 }
