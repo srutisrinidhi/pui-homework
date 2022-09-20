@@ -1,0 +1,32 @@
+.navigation {
+    flex-grow: 1;
+    justify-self: flex-end;
+    justify-content: right;
+    display: flex;
+    margin-right: 100px;
+  }
+  
+  .product {
+    font-size: x-large;
+    margin-left: 40px;
+  }
+  
+  .product:hover {
+    background-color: #e2ed0a;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .cart {
+    font-size: x-large;
+    margin-left: 40px;
+  }
+  
+  .cart:hover {
+    background-color: #e2ed0a;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
