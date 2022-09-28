@@ -106,12 +106,16 @@ class App extends Component {
       }
     }
   }
+
+  /* Function hides the added to cart popup */
   removeBlock = () =>{
     this.setState(prevState => ({
       ...prevState,
       popupDisplay: "none"
     }));
-}
+  }
+
+  /* Function that adds item to cart, updates webpage and triggers popup */
   addToCartList  = (rollIndex) => {
     let price = this.state.totalPrice + Number(this.state.rolls[rollIndex].price)
     let roll = this.state.rolls[rollIndex]
@@ -131,6 +135,7 @@ class App extends Component {
     const myTimeout = setTimeout(this.removeBlock, 3000);
   }
 
+  /* Function changes the color of pack size buttons and computes new price */
   changeQuantity = (className, rollIndex) => {
     let tempRolls = this.state.rolls
     tempRolls[rollIndex].size1Color = "white"
@@ -171,6 +176,7 @@ class App extends Component {
     }))
   }
 
+  /* Function recomputes price when a new glazing option is chosen */
   changeGlazing = (value, rollIndex) => {
     let tempRolls = this.state.rolls
     if (this.state.rolls[rollIndex].currentQuantity === "6") {
