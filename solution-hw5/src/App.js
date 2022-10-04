@@ -1,14 +1,8 @@
 import './App.css';
 import React, { Component } from 'react';
-import logo from './assets/logo.svg';
-import original from './assets/original-cinnamon-roll.jpg';
-import apple from './assets/apple-cinnamon-roll.jpg';
-import raisin from './assets/raisin-cinnamon-roll.jpg';
-import walnut from './assets/walnut-cinnamon-roll.jpg';
-import chocolate from './assets/double-chocolate-cinnamon-roll.jpg'
-import strawberry from './assets/strawberry-cinnamon-roll.jpg';
 import NavBar from './NavBar'
 import Roll from './Item'
+import CartRoll from './cartRoll'
 
 class App extends Component {
   constructor(props) {
@@ -16,82 +10,58 @@ class App extends Component {
     this.state = {
       rolls : [
         {
-          src:{original},
+          src:'assets/original-cinnamon-roll.jpg',
           alt:"Original Cinnamon Roll",
           title:"Original cinnamon roll",
           price:"2.49",
           basePrice:"2.49",
           currentGlaze: "Keep original",
-          currentQuantity: "1",
-          size1Color:"lightgrey",
-          size3Color:"white",
-          size6Color:"white",
-          size12Color:"white"
+          currentQuantity: "1"
         },
         {
-          src:{apple},
+          src:'assets/apple-cinnamon-roll.jpg',
           alt:"Apple Cinnamon Roll",
           title:"Apple cinnamon roll",
           price:"3.49",
           basePrice:"3.49",
           currentGlaze: "Keep original",
-          currentQuantity: "1",
-          size1Color:"lightgrey",
-          size3Color:"white",
-          size6Color:"white",
-          size12Color:"white"
+          currentQuantity: "1"
         },
         {
-          src:{raisin},
+          src:'assets/raisin-cinnamon-roll.jpg',
           alt:"Raisin Cinnamon Roll",
           title:"Raisin cinnamon roll",
           price:"2.99",
           basePrice:"2.99",
           currentGlaze: "Keep original",
-          currentQuantity: "1",
-          size1Color:"lightgrey",
-          size3Color:"white",
-          size6Color:"white",
-          size12Color:"white"
+          currentQuantity: "1"
         },
         {
-          src:{walnut},
+          src:'assets/walnut-cinnamon-roll.jpg',
           alt:"Walnut Cinnamon Roll",
           title:"Walnut cinnamon roll",
           price:"3.49",
           basePrice:"3.49",
           currentGlaze: "Keep original",
-          currentQuantity: "1",
-          size1Color:"lightgrey",
-          size3Color:"white",
-          size6Color:"white",
-          size12Color:"white"
+          currentQuantity: "1"
         },
         {
-          src:{chocolate},
+          src:'assets/double-chocolate-cinnamon-roll.jpg',
           alt:"Double Chocolate Cinnamon Roll",
           title:"Double-chocolate cinnamon roll",
           price:"3.99",
           basePrice:"3.99",
           currentGlaze: "Keep original",
-          currentQuantity: "1",
-          size1Color:"lightgrey",
-          size3Color:"white",
-          size6Color:"white",
-          size12Color:"white"
+          currentQuantity: "1"
         },
         {
-          src:{strawberry},
+          src:'assets/strawberry-cinnamon-roll.jpg',
           alt:"Strawberry Cinnamon Roll",
           title:"Strawberry cinnamon roll",
           price:"3.99",
           basePrice:"3.99",
           currentGlaze: "Keep original",
-          currentQuantity: "1",
-          size1Color:"lightgrey",
-          size3Color:"white",
-          size6Color:"white",
-          size12Color:"white"
+          currentQuantity: "1"
         }
       ],
       cartItems: [],
@@ -103,7 +73,13 @@ class App extends Component {
         glazing:"",
         packSize:"",
         price:""
-      }
+      },
+      searchText: "",
+      searchTextTemp: "",
+      noMatch: 'none',
+      sortCriterea: "name",
+      showShoppingCart: 'none',
+      emptyCart: 'block'
     }
   }
 
@@ -130,9 +106,11 @@ class App extends Component {
       cartItems: [...prevState.cartItems, roll],
       totalPrice: price,
       latestRoll: lastRoll,
-      popupDisplay: "block"
+      popupDisplay: "block",
+      emptyCart: "none"
     }));
     const myTimeout = setTimeout(this.removeBlock, 3000);
+    
   }
 
   /* Function changes the color of pack size buttons and computes new price */
@@ -143,28 +121,24 @@ class App extends Component {
     tempRolls[rollIndex].size6Color = "white"
     tempRolls[rollIndex].size12Color = "white"
     if (className === "btn sizes-1"){
-      console.log("1")
       tempRolls[rollIndex].price = Number(this.state.rolls[rollIndex].basePrice) + Number(this.state.glazingOptions[this.state.rolls[rollIndex].currentGlaze])
       tempRolls[rollIndex].price = String(tempRolls[rollIndex].price.toFixed(2))
       tempRolls[rollIndex].currentQuantity = "1"
       tempRolls[rollIndex].size1Color = "lightgrey"
     }
     else if (className === "btn sizes-3"){
-      console.log("3")
       tempRolls[rollIndex].price = (Number(this.state.rolls[rollIndex].basePrice) + Number(this.state.glazingOptions[this.state.rolls[rollIndex].currentGlaze]))*3
       tempRolls[rollIndex].price = String(tempRolls[rollIndex].price.toFixed(2))
       tempRolls[rollIndex].currentQuantity = "3"
       tempRolls[rollIndex].size3Color = "lightgrey"
     }
     else if (className === "btn sizes-6"){
-      console.log("6")
       tempRolls[rollIndex].price = (Number(this.state.rolls[rollIndex].basePrice) + Number(this.state.glazingOptions[this.state.rolls[rollIndex].currentGlaze]))*5
       tempRolls[rollIndex].price = String(tempRolls[rollIndex].price.toFixed(2))
       tempRolls[rollIndex].currentQuantity = "6"
       tempRolls[rollIndex].size6Color = "lightgrey"
     }
     else if (className === "btn sizes-12"){
-      console.log("12")
       tempRolls[rollIndex].price = (Number(this.state.rolls[rollIndex].basePrice) + Number(this.state.glazingOptions[this.state.rolls[rollIndex].currentGlaze]))*10
       tempRolls[rollIndex].price = String(tempRolls[rollIndex].price.toFixed(2))
       tempRolls[rollIndex].currentQuantity = "12"
@@ -193,20 +167,108 @@ class App extends Component {
     }
     tempRolls[rollIndex].price = String(tempRolls[rollIndex].price.toFixed(2))
     tempRolls[rollIndex].currentGlaze = value;
-    console.log(Number(this.state.rolls[rollIndex].price))
     this.setState(prevState => ({
       ...prevState,
       rolls: tempRolls
     }))
 
   }
+
+  searchText = () => {
+    let temp = this.state.searchTextTemp
+    this.setState(prevState => ({
+      ...prevState,
+      searchText: temp
+    }))
+    let count = 0
+    for (let i=0; i<6; i++){
+      if (this.state.rolls[i].title.includes(temp)){
+        count++
+      }
+    }
+    if (count == 0){
+      this.setState(prevState => ({
+        ...prevState,
+        noMatch: 'block'
+      }))
+    }
+    else{
+      this.setState(prevState => ({
+        ...prevState,
+        noMatch: 'none'
+      }))
+    }
+  }
+
+  updateSearchText = (event) => {
+    this.setState(prevState => ({
+      ...prevState,
+      searchTextTemp: event.target.value
+    }))
+  }
+
+  compare = (a, b) =>{
+    if (this.state.sortCriterea == "name"){
+      return a.title > b.title ? 1 : b.title > a.title ? -1 : 0;
+    }
+    else{
+      return Number(a.price) - Number(b.price)
+    }
+  }
+
+  sortRolls = (v) => {
+    this.setState(prevState => ({
+      ...prevState,
+      sortCriterea: v.target.value
+    }))
+  }
+  
+  showCart = (v) => {
+    if (this.state.showShoppingCart === "none"){
+      this.setState(prevState => ({
+        ...prevState,
+        showShoppingCart: "block"
+      }))
+      if (this.state.cartItems.length==0){
+        this.setState(prevState => ({
+          ...prevState,
+          emptyCart: "block"
+        }))
+      } else {
+          this.setState(prevState => ({
+            ...prevState,
+            emptyCart: "none"
+          }))
+      }
+    } else {
+        this.setState(prevState => ({
+          ...prevState,
+          showShoppingCart: "none"
+        }))
+    }
+  }
+
+  removeFromCart = (roll) => {
+    let temp = this.state.cartItems
+    const index = temp.indexOf(roll);
+    let tempTotalPrice = this.state.totalPrice - roll.price;
+    if (index > -1) {
+      temp.splice(index, 1); 
+    }
+    this.setState(prevState => ({
+      ...prevState,
+      cartItems: temp,
+      totalPrice: tempTotalPrice
+    }))
+  }
+
   render() {
     return (
       <div className="homepage">
       <div className="header-section">
-        <img src={logo} width="25%" alt="logo"/>
+        <img src='assets/logo.svg' width="25%" alt="logo"/>
         <div className="vert-header-section" >
-          <NavBar itemCount={this.state.cartItems.length} totalPrice={this.state.totalPrice}></NavBar>
+          <NavBar itemCount={this.state.cartItems.length} totalPrice={this.state.totalPrice} showCart={this.showCart}></NavBar>
           <hr className="horizontal-line" />
           <p className="tagline"> Our hand-made cinnamon rolls</p>
         </div>
@@ -220,16 +282,60 @@ class App extends Component {
           
           </div>
       </div>
+      <div className='shopping_cart' style={{display:this.state.showShoppingCart}}>
+        <hr className='thick_line'/>
+        <span className="cart_heading"> Shopping Cart ({this.state.cartItems.length} items)</span>
+        <span className="cart_price"> Total: ${this.state.totalPrice.toFixed(2)}</span>
+        <div className="row_cart">
+          <div style={{display:this.state.emptyCart}}> This cart is empty!</div>
+        {this.state.cartItems.map(
+          (roll, idx) => {
+              return <CartRoll 
+              src={roll.src} 
+              alt={roll.alt} 
+              title={roll.title} 
+              price={roll.price}
+              pack_size={roll.currentQuantity}
+              glazing={roll.currentGlaze}
+              removeFromCart={this.removeFromCart}
+              roll={roll}/>
+          }
+        )}
+      </div>
+        <hr className='thick_line'/>
+      </div>
+      <div className='search_div'>
+        <input className='search_input' name='search_text' onChange={this.updateSearchText}></input>
+        <button className='search' onClick={this.searchText}>Search</button>
+        <span className='sort_div'>
+          <label className='sort'> sort by:</label>
+          <select className='sort_select' onChange={(v) => this.sortRolls(v)}>
+            <option value="name">Name</option>
+            <option value="base_price">Base Price</option>
+          </select>
+        </span>
+      </div>
+      
     <div className="food-options">
       <div className="row">
-        <Roll src={original} alt={this.state.rolls[0].alt} title={this.state.rolls[0].title} price={this.state.rolls[0].price} addToCart={this.addToCartList} rollIndex="0" changeGlazing={this.changeGlazing} changeQuantity={this.changeQuantity} size1Color={this.state.rolls[0].size1Color} size3Color={this.state.rolls[0].size3Color} size6Color={this.state.rolls[0].size6Color} size12Color={this.state.rolls[0].size12Color}/>
-        <Roll src={apple} alt={this.state.rolls[1].alt} title={this.state.rolls[1].title} price={this.state.rolls[1].price} addToCart={this.addToCartList} rollIndex="1" changeGlazing={this.changeGlazing} changeQuantity={this.changeQuantity} size1Color={this.state.rolls[1].size1Color} size3Color={this.state.rolls[1].size3Color} size6Color={this.state.rolls[1].size6Color} size12Color={this.state.rolls[1].size12Color}/>
-        <Roll src={raisin} alt={this.state.rolls[2].alt} title={this.state.rolls[2].title} price={this.state.rolls[2].price} addToCart={this.addToCartList} rollIndex="2" changeGlazing={this.changeGlazing} changeQuantity={this.changeQuantity} size1Color={this.state.rolls[2].size1Color} size3Color={this.state.rolls[2].size3Color} size6Color={this.state.rolls[2].size6Color} size12Color={this.state.rolls[2].size12Color}/>
-      </div>
-      <div className="row">
-        <Roll src={walnut} alt={this.state.rolls[3].alt} title={this.state.rolls[3].title} price={this.state.rolls[3].price} addToCart={this.addToCartList} rollIndex="3" changeGlazing={this.changeGlazing} changeQuantity={this.changeQuantity} size1Color={this.state.rolls[3].size1Color} size3Color={this.state.rolls[3].size3Color} size6Color={this.state.rolls[3].size6Color} size12Color={this.state.rolls[3].size12Color}/>
-        <Roll src={chocolate} alt={this.state.rolls[4].alt} title={this.state.rolls[4].title} price={this.state.rolls[4].price} addToCart={this.addToCartList} rollIndex="4" changeGlazing={this.changeGlazing} changeQuantity={this.changeQuantity} size1Color={this.state.rolls[4].size1Color} size3Color={this.state.rolls[4].size3Color} size6Color={this.state.rolls[4].size6Color} size12Color={this.state.rolls[4].size12Color}/>
-        <Roll src={strawberry} alt={this.state.rolls[5].alt} title={this.state.rolls[5].title} price={this.state.rolls[5].price} addToCart={this.addToCartList} rollIndex="5" changeGlazing={this.changeGlazing} changeQuantity={this.changeQuantity} size1Color={this.state.rolls[5].size1Color} size3Color={this.state.rolls[5].size3Color} size6Color={this.state.rolls[5].size6Color} size12Color={this.state.rolls[5].size12Color}/>
+        {this.state.rolls.sort(this.compare).map(
+          (roll, idx) => {
+            if ((this.state.searchText == "")|| (roll.title.includes(this.state.searchText))){
+              return <Roll 
+              src={roll.src} 
+              alt={roll.alt} 
+              title={roll.title} 
+              price={roll.price} 
+              addToCart={this.addToCartList} 
+              rollIndex={idx} 
+              changeGlazing={this.changeGlazing} 
+              changeQuantity={this.changeQuantity} />
+            } else {
+              return <div/>
+            }
+          }
+        )}
+         <div className="no_match" style={{hidden:this.state.noMatch}}> No match!</div>
       </div>
     </div>
   

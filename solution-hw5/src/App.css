@@ -44,3 +44,36 @@ padding-right: 70px;
 float: right;
 border: 1px solid #888;
 }
+
+.search_div{
+  margin-left: 10%;
+}
+
+.search_input{
+  width: 280px;
+}
+
+.sort_div {
+  float: center;
+}
+
+.thick_line {
+  height: 8px;
+  background: #675B5B;
+}
+
+.cart_heading {
+  font-size:x-large;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+.cart_price {
+  font-size:x-large;
+  float: right;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+.no_match{
+  font-size: x-large;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}

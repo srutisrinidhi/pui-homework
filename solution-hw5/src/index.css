@@ -35,6 +35,14 @@ body {
 
 .row {
   display: flex;
+  flex-wrap: wrap;
   margin: 10%;
+  margin-top: 3%;
   justify-content: space-between;
+}
+
+.row_cart{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 3%;
 }
