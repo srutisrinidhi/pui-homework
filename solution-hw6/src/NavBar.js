@@ -9,7 +9,6 @@ const NavBar = (props) => {
             </div>
             <div className="cart"> 
                 <div className='cart-header' onClick={(v) => showCart(v)}> CART </div>
-                <p className="cart-items"> {itemCount} item <br/> Total: ${totalPrice}</p>
             </div>
           </div>
     );

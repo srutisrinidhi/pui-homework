@@ -64,10 +64,9 @@ class App extends Component {
           currentQuantity: "1"
         }
       ],
-      cartItems: [],
+      cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
       totalPrice: 0,
       glazingOptions: {"Keep original": 0, "Sugar milk": 0, "Vanilla milk": 0.5, "Double chocolate": 1.5},
-      popupDisplay: "None",
       latestRoll:{
         title:"",
         glazing:"",
@@ -83,18 +82,21 @@ class App extends Component {
     }
   }
 
-  /* Function hides the added to cart popup */
-  removeBlock = () =>{
+  componentDidMount = () => {
+    let tempPrice = 0;
+    for (let roll of this.state.cartItems){
+      tempPrice += Number(roll.price)
+    }
     this.setState(prevState => ({
       ...prevState,
-      popupDisplay: "none"
+      totalPrice: tempPrice
     }));
   }
-
   /* Function that adds item to cart, updates webpage and triggers popup */
   addToCartList  = (rollIndex) => {
     let price = this.state.totalPrice + Number(this.state.rolls[rollIndex].price)
     let roll = this.state.rolls[rollIndex]
+    let cartTemp = [...this.state.cartItems, roll]
     let lastRoll = {
       title: roll.title,
       glazing: roll.currentGlaze,
@@ -103,12 +105,14 @@ class App extends Component {
     }
     this.setState(prevState => ({
       ...prevState,
-      cartItems: [...prevState.cartItems, roll],
+      cartItems: cartTemp,
       totalPrice: price,
       latestRoll: lastRoll,
-      popupDisplay: "block",
       emptyCart: "none"
     }));
+    localStorage.setItem("cartItems", JSON.stringify(cartTemp));
+    localStorage.setItem("totalPrice", JSON.stringify(price));
+    console.log("local storage is updated to: ", localStorage.getItem("cartItems") )
     const myTimeout = setTimeout(this.removeBlock, 3000);
     
   }
@@ -260,6 +264,9 @@ class App extends Component {
       cartItems: temp,
       totalPrice: tempTotalPrice
     }))
+    localStorage.setItem("cartItems", JSON.stringify(temp));
+    localStorage.setItem("totalPrice", JSON.stringify(tempTotalPrice));
+    console.log("local storage is updated to: ", localStorage.getItem("cartItems"))
   }
 
   render() {
@@ -272,15 +279,6 @@ class App extends Component {
           <hr className="horizontal-line" />
           <p className="tagline"> Our hand-made cinnamon rolls</p>
         </div>
-        <div id="myModal" className="modal" style={{display:this.state.popupDisplay}}>
-            <div className="modal-content">
-              <p>Added to cart: <br/> <br/> </p> 
-              <p className='bold'>{this.state.latestRoll.title} <br/> </p>
-              <p>{this.state.latestRoll.glazing} <br/> Pack of {this.state.latestRoll.packSize} <br/> Prize: $ {this.state.latestRoll.price} </p>
-
-            </div>
-          
-          </div>
       </div>
       <div className='shopping_cart' style={{display:this.state.showShoppingCart}}>
         <hr className='thick_line'/>
@@ -335,7 +333,7 @@ class App extends Component {
             }
           }
         )}
-         <div className="no_match" style={{hidden:this.state.noMatch}}> No match!</div>
+         <div className="no_match" style={{display:this.state.noMatch}}> No match!</div>
       </div>
     </div>
   
