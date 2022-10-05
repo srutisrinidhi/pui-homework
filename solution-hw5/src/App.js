@@ -335,7 +335,7 @@ class App extends Component {
             }
           }
         )}
-         <div className="no_match" style={{hidden:this.state.noMatch}}> No match!</div>
+         <div className="no_match" style={{display:this.state.noMatch}}> No match!</div>
       </div>
     </div>
   
